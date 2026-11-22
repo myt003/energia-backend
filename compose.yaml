@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: energia
+      POSTGRES_USER: energia
+      POSTGRES_PASSWORD: energia_dev
+    ports:
+      - "127.0.0.1:5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U energia -d energia"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - energia-postgres:/var/lib/postgresql/data
+
+volumes:
+  energia-postgres:
